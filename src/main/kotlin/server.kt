@@ -12,6 +12,8 @@ import kotlinx.html.*
 import org.jetbrains.exposed.sql.Database
 import io.ktor.response.*
 import models.ProjectsDao
+import models.Services
+import models.ServicesDao
 import models.TestData
 import org.slf4j.event.Level
 
@@ -35,7 +37,8 @@ fun Application.mainModule() {
 
     val db: Database = Database.connect("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1", driver = "org.h2.Driver")
     val projectsDao = ProjectsDao(db)
-    val testData = TestData(db, projectsDao)
+    val servicesDao = ServicesDao(db)
+    val testData = TestData(db, projectsDao,servicesDao)
 
     testData.init()
     install(ContentNegotiation) { jackson() }
@@ -48,6 +51,7 @@ fun Application.mainModule() {
 
         routing {
             projectRoutes(projectsDao)
+            serviceRoutes(servicesDao)
         }
     }
 
