@@ -1,5 +1,6 @@
 package models
 
+import org.jetbrains.exposed.dao.EntityID
 import org.jetbrains.exposed.dao.IntIdTable
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
@@ -20,11 +21,12 @@ private fun fromRow(row: ResultRow) =
 
 class ServicesDao(private val db: Database) {
 
-    fun create(name: String, url: String): Int = transaction(db) {
+
+    fun create(name: String, url: String): EntityID<Int> = transaction(db) {
         Services.insertAndGetId {
             it[Services.name] = name
             it[Services.url] = url
-        }.value
+        }
     }
 
     fun findById(id: Int): Service = transaction(db) {

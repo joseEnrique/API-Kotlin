@@ -11,10 +11,7 @@ import io.ktor.server.netty.Netty
 import kotlinx.html.*
 import org.jetbrains.exposed.sql.Database
 import io.ktor.response.*
-import models.ProjectsDao
-import models.Services
-import models.ServicesDao
-import models.TestData
+import models.*
 import org.slf4j.event.Level
 
 fun HTML.index() {
@@ -38,7 +35,8 @@ fun Application.mainModule() {
     val db: Database = Database.connect("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1", driver = "org.h2.Driver")
     val projectsDao = ProjectsDao(db)
     val servicesDao = ServicesDao(db)
-    val testData = TestData(db, projectsDao,servicesDao)
+    val requestsDao = RequestsDao(db)
+    val testData = TestData(db, projectsDao,servicesDao, requestsDao)
 
     testData.init()
     install(ContentNegotiation) { jackson() }
