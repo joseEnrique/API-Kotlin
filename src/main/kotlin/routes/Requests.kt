@@ -5,25 +5,24 @@ import io.ktor.locations.*
 import io.ktor.locations.get
 import io.ktor.response.respond
 import io.ktor.routing.*
-import models.ProjectsDao
-import models.ServicesDao
+import models.RequestsDao
 
 @KtorExperimentalLocationsAPI
-fun Routing.serviceRoutes(servicesDao: ServicesDao) {
+fun Routing.requestRoutes(requestsDao: RequestsDao) {
 
-    @Location("/services")
+    @Location("/requests")
     class GetServices
 
     get<GetServices> {
-        val list = servicesDao.all()
+        val list = requestsDao.all()
         call.respond(list)
     }
 
-    @Location("/services/{id}")
+    @Location("/requests/{id}")
     data class GetService(val id: Int)
 
     get<GetService> {
-        val project = servicesDao.findById(it.id)
+        val project = requestsDao.findById(it.id)
         call.respond(project)
     }
 

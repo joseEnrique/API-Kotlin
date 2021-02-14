@@ -1,4 +1,5 @@
-//package routes
+/*
+package routes
 import io.ktor.application.call
 import io.ktor.locations.*
 import io.ktor.locations.get
@@ -25,4 +26,4 @@ fun Routing.projectRoutes(projectsDao: ProjectsDao) {
         call.respond(project)
     }
 
-}
+}*/

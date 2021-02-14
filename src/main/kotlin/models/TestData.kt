@@ -1,3 +1,4 @@
+/*
 package models
 
 import org.jetbrains.exposed.sql.Database
@@ -17,9 +18,10 @@ ProjectsDao,private val servicesDao: ServicesDao, private val requestsDao: Reque
             val ser1 = servicesDao.create("Google", "http://google.com")
             println(ser1)
             val re1 = requestsDao.create("Get", "GET", "{a:1}", ser1)
+            val re2 = requestsDao.create("Post", "POST", "{a:12}", ser1)
             println(re1)
 
 
         }
     }
-}
+}*/

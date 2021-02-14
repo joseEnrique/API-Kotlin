@@ -1,3 +1,4 @@
+/*
 package models
 
 import org.jetbrains.exposed.dao.Entity
@@ -6,7 +7,8 @@ import org.jetbrains.exposed.dao.IntIdTable
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 
-data class Request(val id: Int, val name: String, val url: String)
+data class Request(val id: Int, val name: String,
+                   val method: String, val service: String)
 
 object Requests : IntIdTable() {
     val name = varchar("name", 256)
@@ -15,11 +17,12 @@ object Requests : IntIdTable() {
     val service = reference("service", Services)
 }
 
-private fun fromRow(row: ResultRow) =
+private fun fromRow(row: ResultRow, db: Database) =
     Request(
         row[Requests.id].value,
         row[Requests.name],
         row[Requests.method],
+        "test"
     )
 
 class RequestsDao(private val db: Database) {
@@ -34,15 +37,6 @@ class RequestsDao(private val db: Database) {
         }
     }
 
-    fun findById(id: Int): Request = transaction(db) {
-        val row = Requests.select { Requests.id.eq(id) }.single()
-        fromRow(row)
-    }
-    fun all() = transaction(db) {
-        val results = Requests.selectAll().toList()
-        results.map {
-            fromRow(it)
-        }
-    }
 
-}
+
+}*/

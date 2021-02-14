@@ -1,3 +1,4 @@
+/*
 package models
 
 import org.jetbrains.exposed.dao.EntityID
@@ -20,15 +21,12 @@ private fun fromRow(row: ResultRow) =
     )
 
 class ServicesDao(private val db: Database) {
-
-
     fun create(name: String, url: String): EntityID<Int> = transaction(db) {
         Services.insertAndGetId {
             it[Services.name] = name
             it[Services.url] = url
         }
     }
-
     fun findById(id: Int): Service = transaction(db) {
         val row = Services.select { Services.id.eq(id) }.single()
         fromRow(row)
@@ -40,4 +38,4 @@ class ServicesDao(private val db: Database) {
         }
     }
 
-}
+}*/

@@ -1,19 +1,12 @@
-version: '2'
+version: "3.7"
 services:
-
-  # SQL database
-  postgres:
-    image: "postgres"
-    restart: "always"
-    volumes:
-      - "ktor-starter-data:/var/lib/postgresql/data"
-    ports:
-      - "54321:5432"
+  books_db:
+    image: postgres:13-alpine
     environment:
-      POSTGRES_USER: "test"
-      POSTGRES_PASSWORD: "test"
-      POSTGRES_DB: "ktor-starter"
-    mem_limit: "1g"
+      POSTGRES_DB: "apireasonerdb"
+      POSTGRES_USER: "user"
+      POSTGRES_PASSWORD: "password"
+      POSTGRES_ROOT_PASSWORD: "rootpwd"
+    ports:
+      - "5432:5432"
 
-volumes:
-  ktor-starter-data:
