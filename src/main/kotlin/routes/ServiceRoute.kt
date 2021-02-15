@@ -25,8 +25,8 @@ fun Route.services() {
 
     get("service/{id}") {
         val serviceId = call.parameters["id"]?.toIntOrNull() ?: throw NotFoundException()
-        val book = serviceService.getAservice(serviceId)
-        call.respond(book)
+        val service = serviceService.getAservice(serviceId)
+        call.respond(service)
     }
 
     post("service") {

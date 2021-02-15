@@ -8,5 +8,6 @@ fun Routing.apiRoute() {
     route("/api/v1") {
         books()
         services()
+        requests()
     }
 }

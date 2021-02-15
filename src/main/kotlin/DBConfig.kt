@@ -1,6 +1,7 @@
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
 import data.Books
+import data.Requests
 import data.Services
 import io.ktor.application.Application
 import io.ktor.util.KtorExperimentalAPI
@@ -23,6 +24,6 @@ fun Application.initDB() {
 
 private fun createTables() = transaction {
     SchemaUtils.create(
-        Books, Services
+        Books, Services, Requests
     )
 }

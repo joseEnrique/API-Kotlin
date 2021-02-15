@@ -8,15 +8,16 @@ import org.jetbrains.exposed.sql.ReferenceOption
 
 
 enum class Method(val status: String) {
-    Get("get"),
-    Post("post"),
-    Put("put")
+    GET("get"),
+    POST("post"),
+    PUT("put")
 }
 
 
 
 object Requests : IntIdTable() {
-    override val id = reference("service_id", Services, onDelete = ReferenceOption.CASCADE).primaryKey()
+    override val id = reference("service_id", Services, onDelete = ReferenceOption.CASCADE)
+    override val primaryKey=PrimaryKey(id)
     val name = varchar("name", 20)
     val url = varchar("url", 255)
     val method = enumerationByName("method", 20, Method::class)
@@ -34,7 +35,7 @@ class RequestEntity(id: EntityID<Int>) : IntEntity(id) {
     var service by ServiceEntity referencedOn Services.id
     override fun toString(): String = "Request($name, $url,$method, $payload,$service)"
 
-    fun toRequest() = Request(id.value, name, url,method,payload)
+    fun toRequest() = Request(id.value, name, url,method,payload,1)
 }
 
 data class Request(
@@ -42,6 +43,7 @@ data class Request(
     val name: String,
     val url: String,
     val method: Method,
-    val payload: String
+    val payload: String,
+    val service_id: Int
 )
 
