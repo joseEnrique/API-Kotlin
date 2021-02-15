@@ -1,0 +1,43 @@
+package routes
+
+import data.Service
+import io.ktor.application.call
+import io.ktor.features.NotFoundException
+import io.ktor.http.HttpStatusCode
+import io.ktor.request.receive
+import io.ktor.response.respond
+import io.ktor.routing.Route
+import io.ktor.routing.delete
+import io.ktor.routing.get
+import io.ktor.routing.post
+import org.kodein.di.instance
+import org.kodein.di.ktor.di
+import services.ServiceService
+
+fun Route.services() {
+
+    val serviceService by di().instance<ServiceService>()
+
+    get("services") {
+        val allServices = serviceService.getAllServices()
+        call.respond(allServices)
+    }
+
+    get("service/{id}") {
+        val serviceId = call.parameters["id"]?.toIntOrNull() ?: throw NotFoundException()
+        val book = serviceService.getAservice(serviceId)
+        call.respond(book)
+    }
+
+    post("service") {
+        val serviceRequest = call.receive<Service>()
+        serviceService.addService(serviceRequest)
+        call.respond(HttpStatusCode.Accepted)
+    }
+
+    delete("service/{id}") {
+        val serviceId = call.parameters["id"]?.toIntOrNull() ?: throw NotFoundException()
+        serviceService.deleteService(serviceId)
+        call.respond(HttpStatusCode.OK)
+    }
+}
