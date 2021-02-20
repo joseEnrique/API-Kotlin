@@ -4,6 +4,7 @@ import org.jetbrains.exposed.dao.IntEntity
 import org.jetbrains.exposed.dao.IntEntityClass
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.IntIdTable
+import org.jetbrains.exposed.sql.ReferenceOption
 import org.jetbrains.exposed.sql.SizedIterable
 
 object Services : IntIdTable() {
@@ -12,10 +13,9 @@ object Services : IntIdTable() {
 }
 class ServiceEntity(id: EntityID<Int>) : IntEntity(id) {
     companion object : IntEntityClass<ServiceEntity>(Services)
-
     var name by Services.name
     var url by Services.url
-    val requests by RequestEntity referrersOn Requests.id
+    val requests by RequestEntity referrersOn Requests.service_id
     override fun toString(): String = "Service($name, $url. $requests)"
 
     fun toService() = Service(id.value, name, url, requests)

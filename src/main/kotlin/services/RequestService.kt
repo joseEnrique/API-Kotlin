@@ -1,13 +1,13 @@
 package services
 
-import data.Request
-import data.RequestEntity
-import data.Service
-import data.ServiceEntity
+import data.*
+import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
+import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
+import sun.security.jca.ServiceId
 
 class RequestService {
 
@@ -20,13 +20,14 @@ class RequestService {
         RequestEntity.get(requestId).toRequest()
     }
 
-    fun addRequest(request: Request, service: ServiceEntity) = transaction {
+    fun addRequest(request: Request, serviceId: Int) = transaction {
+        println(ServiceEntity[serviceId])
         RequestEntity.new {
             this.method = request.method
             this.name = request.name
             this.payload = request.payload
             this.url = request.url
-            this.service = service
+            this.service = ServiceEntity[serviceId]
         }
     }
 

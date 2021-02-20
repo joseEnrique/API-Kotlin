@@ -35,9 +35,9 @@ fun Route.requests() {
     post("request") {
         val requestRequest = call.receive<Request>()
         println("************************" + requestRequest)
-        val service = serviceService.getAservice(requestRequest.service_id)
-        //println(service)
-        requestService.addRequest(requestRequest, ServiceEntity[service.id])
+        //val service = serviceService.getAservice(requestRequest.service_id.id.value)
+        println(requestRequest.service_id)
+        requestService.addRequest(requestRequest,requestRequest.service_id)
         call.respond(HttpStatusCode.Accepted)
     }
 

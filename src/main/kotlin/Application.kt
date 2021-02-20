@@ -35,7 +35,6 @@ fun Application.module(testing: Boolean = false) {
             call.respond(HttpStatusCode.NotFound)
         }
     }
-
     di {
         bindServices()
     }

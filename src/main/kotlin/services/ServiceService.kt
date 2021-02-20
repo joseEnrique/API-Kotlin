@@ -17,8 +17,10 @@ class ServiceService {
 
 
     fun getAservice(serviceId: Int): Service = transaction {
-        ServiceEntity.get(serviceId).toService()
+        val ser = ServiceEntity.get(serviceId)
+        ser.toService()
     }
+
 
     fun addService(service: Service) = transaction {
         ServiceEntity.new {
