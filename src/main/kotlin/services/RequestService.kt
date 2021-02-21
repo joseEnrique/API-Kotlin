@@ -1,13 +1,9 @@
 package services
 
-import data.*
-import org.jetbrains.exposed.dao.id.EntityID
-import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
-import org.jetbrains.exposed.sql.insert
-import org.jetbrains.exposed.sql.select
-import org.jetbrains.exposed.sql.selectAll
+import models.Request
+import models.RequestEntity
+import models.ServiceEntity
 import org.jetbrains.exposed.sql.transactions.transaction
-import sun.security.jca.ServiceId
 
 class RequestService {
 
@@ -17,8 +13,11 @@ class RequestService {
 
 
     fun getArequest(requestId: Int): Request = transaction {
-        RequestEntity.get(requestId).toRequest()
+        val request = RequestEntity[requestId]
+        request.toRequest()
     }
+
+
 
     fun addRequest(request: Request, serviceId: Int) = transaction {
         println(ServiceEntity[serviceId])

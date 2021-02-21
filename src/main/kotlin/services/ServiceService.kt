@@ -1,7 +1,7 @@
 package services
 
-import data.Service
-import data.ServiceEntity
+import models.Service
+import models.ServiceEntity
 import org.jetbrains.exposed.sql.transactions.transaction
 
 class ServiceService {

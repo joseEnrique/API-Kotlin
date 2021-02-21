@@ -1,6 +1,6 @@
 package routes
 
-import data.Service
+import models.Service
 import io.ktor.application.call
 import io.ktor.features.NotFoundException
 import io.ktor.http.HttpStatusCode

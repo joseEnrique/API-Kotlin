@@ -1,10 +1,11 @@
-package data
+package models
 
 import org.jetbrains.exposed.dao.IntEntity
 import org.jetbrains.exposed.dao.IntEntityClass
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.IntIdTable
 import org.jetbrains.exposed.sql.ReferenceOption
+import org.jetbrains.exposed.sql.SizedIterable
 
 
 enum class Method(val status: String) {
@@ -44,3 +45,8 @@ data class Request(
     val service_id: Int
 )
 
+
+data class Valid(
+    val isValid: Boolean,
+    val idInt: Int
+)

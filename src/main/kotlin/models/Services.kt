@@ -1,41 +1,29 @@
-/*
 package models
 
-import org.jetbrains.exposed.dao.EntityID
-import org.jetbrains.exposed.dao.IntIdTable
-import org.jetbrains.exposed.sql.*
-import org.jetbrains.exposed.sql.transactions.transaction
-
-data class Service(val id: Int, val name: String, val url: String)
+import org.jetbrains.exposed.dao.IntEntity
+import org.jetbrains.exposed.dao.IntEntityClass
+import org.jetbrains.exposed.dao.id.EntityID
+import org.jetbrains.exposed.dao.id.IntIdTable
+import org.jetbrains.exposed.sql.ReferenceOption
+import org.jetbrains.exposed.sql.SizedIterable
 
 object Services : IntIdTable() {
     val name = varchar("name", 256)
     val url = varchar( "url", 256)
 }
+class ServiceEntity(id: EntityID<Int>) : IntEntity(id) {
+    companion object : IntEntityClass<ServiceEntity>(Services)
+    var name by Services.name
+    var url by Services.url
+    val requests by RequestEntity referrersOn Requests.service_id
+    override fun toString(): String = "Service($name, $url. $requests)"
 
-private fun fromRow(row: ResultRow) =
-    Service(
-        row[Services.id].value,
-        row[Services.name],
-        row[Services.url],
-    )
+    fun toService() = Service(id.value, name, url, requests)
+}
 
-class ServicesDao(private val db: Database) {
-    fun create(name: String, url: String): EntityID<Int> = transaction(db) {
-        Services.insertAndGetId {
-            it[Services.name] = name
-            it[Services.url] = url
-        }
-    }
-    fun findById(id: Int): Service = transaction(db) {
-        val row = Services.select { Services.id.eq(id) }.single()
-        fromRow(row)
-    }
-    fun all() = transaction(db) {
-        val results = Services.selectAll().toList()
-        results.map {
-            fromRow(it)
-        }
-    }
-
-}*/
+data class Service(
+    val id: Int,
+    val name: String,
+    val url: String,
+    val requests: SizedIterable<RequestEntity>
+)

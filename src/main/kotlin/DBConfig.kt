@@ -1,7 +1,7 @@
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
-import data.Requests
-import data.Services
+import models.Requests
+import models.Services
 import io.ktor.application.Application
 import io.ktor.util.KtorExperimentalAPI
 import org.jetbrains.exposed.sql.Database
