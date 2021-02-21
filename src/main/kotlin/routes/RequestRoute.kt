@@ -34,16 +34,19 @@ fun Route.requests() {
     }
 
     put("request/{id}/validate") {
-        val requestId = call.parameters["id"]?.toIntOrNull()?: throw NotFoundException()
-        val request = requestService.getArequest(requestId)
-        val valid = Valid(
+        val requestId = call.parameters["id"]?.toIntOrNull() ?: throw NotFoundException()
+        try {
+            requestService.getArequest(requestId)
+            val valid = Valid(
                 isValid = true,
                 idInt = requestId
             )
-
-
-        call.respond(valid)
+            call.respond(valid)
+        } catch (e: Exception) {
+            call.respond(HttpStatusCode.BadRequest)
+        }
     }
+
 
     post("request") {
         val requestRequest = call.receive<Request>()
