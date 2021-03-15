@@ -1,0 +1,10 @@
+data_p1 = 0..100000;
+data_p1Set = {0, 1};
+data_p2 = 0..100000;
+data_p2Set = {0, 1};
+data_p3 = 0..100000;
+data_p3Set = {0, 1};
+data_p4 = 0..100000;
+data_p4Set = {0, 1};
+data_p5 = 0..100000;
+data_p5Set = {0, 1};

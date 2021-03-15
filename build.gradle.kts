@@ -13,6 +13,7 @@ repositories {
     mavenCentral()
     maven { url = uri("https://dl.bintray.com/kotlin/kotlinx") }
     maven { url = uri("https://dl.bintray.com/kotlin/ktor") }
+    maven { url = uri("https://repo1.maven.org") }
 }
 
 dependencies {
@@ -32,7 +33,7 @@ dependencies {
     }
 */
 
-
+    implementation("org.junit.jupiter:junit-jupiter-api:5.6.0")
     // Kotlin dependencies
     implementation("io.ktor:ktor-server-netty:1.4.0")
     implementation("ch.qos.logback:logback-classic:1.2.1")
@@ -50,6 +51,8 @@ dependencies {
     implementation("com.zaxxer:HikariCP:3.4.5")
     implementation("org.postgresql:postgresql:42.2.1")
 
+    //IDL
+    implementation("es.us.isa:idl-reasoner:0.0.1")
 
     //implementation("org.slf4j:slf4j-simple:1.6.1")
 /*    implementation("org.jetbrains.exposed:exposed:0.11.2") {
