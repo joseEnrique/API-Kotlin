@@ -21,6 +21,7 @@ class ServiceService {
         ServiceEntity.new {
             this.name = service.name
             this.url = service.url
+            this.oas = service.oas
         }
     }
 
