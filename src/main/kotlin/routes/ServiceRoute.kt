@@ -31,8 +31,11 @@ fun Route.services() {
 
     post("service") {
         val serviceRequest = call.receive<Service>()
-        serviceService.addService(serviceRequest)
-        call.respond(HttpStatusCode.Accepted)
+        val serciceCreated = serviceService.addService(serviceRequest)
+        serviceService.downloadOas(serciceCreated.oas)
+        //call.respond(HttpStatusCode.Accepted)
+
+        call.respond(serciceCreated)
     }
 
     delete("service/{id}") {

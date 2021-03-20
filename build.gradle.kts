@@ -38,6 +38,8 @@ dependencies {
     implementation("io.ktor:ktor-server-netty:1.4.0")
     implementation("ch.qos.logback:logback-classic:1.2.1")
     implementation("io.ktor:ktor-server-core:1.4.0")
+    implementation("io.ktor:ktor-client-core:1.5.2")
+    implementation("io.ktor:ktor-client-cio:1.5.2")
     implementation("io.ktor:ktor-gson:1.4.0")
     implementation("org.kodein.di:kodein-di-framework-ktor-server-jvm:7.0.0")
 
