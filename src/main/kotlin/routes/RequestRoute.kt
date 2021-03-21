@@ -49,7 +49,8 @@ fun Route.requests() {
 
     put("request/{id}/analyze") {
         //val requestId = call.parameters["id"]?.toIntOrNull() ?: throw NotFoundException()
-        val isValid = requestService.validateRequest()
+        val requestRequest = call.receive<Request>()
+        val isValid = requestService.validateRequest(requestRequest.payload)
         if (isValid != null) {
             call.respond(isValid)
         }else{

@@ -5,6 +5,8 @@ import models.RequestEntity
 import models.ServiceEntity
 import org.jetbrains.exposed.sql.transactions.transaction
 import es.us.isa.idlreasoner.analyzer.Analyzer
+import com.google.gson.Gson
+import java.util.HashMap
 
 
 class RequestService {
@@ -37,10 +39,17 @@ class RequestService {
         RequestEntity[requestId].delete()
     }
 
-    fun validateRequest(): Boolean? {
-        val analyzer = Analyzer("oas", "no_deps.idl", "./src/test/resources/OAS_test_suite.yaml", "/oneParamInt", "get")
+    fun validateRequest(payload: String): Boolean? {
+        val analyzer = Analyzer("oas", "no_deps.idl", "./src/test/resources/OAS_test_suite.yaml", "/oneParamBoolean", "get")
+        val gson = Gson()
+        //val fakrequest = "{'employee.name':'Bob','employee.salary':{'a':1}}"
+        val map: Map<*, *> = gson.fromJson(payload, MutableMap::class.java)
         val request: MutableMap<String, String> = java.util.HashMap()
-        request["p1"] = "1"
+
+        for ((k, v) in map) {
+            request[k.toString()] = v.toString()
+        }
+
         return analyzer.isValidRequest(request)
     }
 }

@@ -2,6 +2,7 @@ out
 gen
 
 /src/public/*
+idl_aux_files/*
 /build
 .gradle
 
