@@ -20,7 +20,7 @@ class ServiceService {
             val file = File(".", "/src/public/$name.yml")
             file.writeBytes(bytes)
             true
-        } catch (e: IOException) {
+        } catch (e: Exception) {
             false
         }
     }
