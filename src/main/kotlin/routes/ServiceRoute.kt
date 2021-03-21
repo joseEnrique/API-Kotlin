@@ -6,17 +6,18 @@ import io.ktor.features.NotFoundException
 import io.ktor.http.HttpStatusCode
 import io.ktor.request.receive
 import io.ktor.response.respond
-import io.ktor.routing.Route
+import io.ktor.routing.*
 import io.ktor.routing.delete
-import io.ktor.routing.get
-import io.ktor.routing.post
+import models.Request
 import org.kodein.di.instance
 import org.kodein.di.ktor.di
+import services.RequestService
 import services.ServiceService
 
 fun Route.services() {
 
     val serviceService by di().instance<ServiceService>()
+    val requestService by di().instance<RequestService>()
 
     get("services") {
         val allServices = serviceService.getAllServices()
@@ -39,6 +40,18 @@ fun Route.services() {
             call.respond(HttpStatusCode.NotAcceptable)
         }
         //call.respond(HttpStatusCode.Accepted)
+
+    }
+
+    put("service/{id}/request/analyze") {
+        val ServiceId = call.parameters["id"]?.toIntOrNull() ?: throw NotFoundException()
+        val requestRequest = call.receive<Request>()
+        val isValid = requestService.validateRequest(requestRequest,ServiceId)
+        if (isValid != null) {
+            call.respond(isValid)
+        }else{
+            call.respond(HttpStatusCode.ServiceUnavailable)
+        }
 
     }
 
