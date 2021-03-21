@@ -1,6 +1,7 @@
 out
 gen
 
+/src/public/*
 /build
 .gradle
 

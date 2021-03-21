@@ -14,17 +14,15 @@ class ServiceService {
     }
 
     suspend fun downloadOas(url: String, name: String): Boolean {
-
         return try {
             val client = HttpClient()
             val bytes = client.get<ByteArray>(url)
-            val file = File(".", "/src/public/$name")
+            val file = File(".", "/src/public/$name.yml")
             file.writeBytes(bytes)
             true
         } catch (e: IOException) {
             false
         }
-
     }
 
     fun getAservice(serviceId: Int): Service = transaction {
