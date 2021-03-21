@@ -13,14 +13,18 @@ class ServiceService {
         ServiceEntity.all().map(ServiceEntity::toService)
     }
 
-    suspend fun downloadOas(url: String) {
-        println(url)
-        val client = HttpClient()
-        val bytes = client.get<ByteArray>(url)
+    suspend fun downloadOas(url: String, name: String): Boolean {
 
-        //Create a temp file on the server & write the zip file bytes into it.
-        val file = File(".", "./src/test/resources/test.yaml")
-        file.writeBytes(bytes)
+        return try {
+            val client = HttpClient()
+            val bytes = client.get<ByteArray>(url)
+            val file = File(".", "/src/public/$name")
+            file.writeBytes(bytes)
+            true
+        } catch (e: IOException) {
+            false
+        }
+
     }
 
     fun getAservice(serviceId: Int): Service = transaction {
