@@ -40,18 +40,18 @@ class RequestService {
 
     fun validateRequest(req: Request,serviceId: Int): Boolean? = transaction {
         val service = ServiceEntity.get(serviceId)
-        println(service)
-        println(req)
         val analyzer = Analyzer("oas", "no_deps.idl", "./src/public/${service.name}${service.id}.yml", req.uri, "get")
         val gson = Gson()
         //val fakrequest = "{'employee.name':'Bob','employee.salary':{'a':1}}"
         val map: Map<*, *> = gson.fromJson(req.payload, MutableMap::class.java)
         val request: MutableMap<String, String> = java.util.HashMap()
-
         for ((k, v) in map) {
             request[k.toString()] = v.toString()
         }
-
-        analyzer.isValidRequest(request)
+        try {
+            analyzer.isValidRequest(request)
+        }catch (e: Exception){
+            false
+        }
     }
 }
