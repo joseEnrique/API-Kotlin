@@ -3,6 +3,9 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     kotlin("jvm") version "1.4.10"
     application
+    kotlin("plugin.serialization") version "1.4.10"
+
+
 }
 
 group = "at.quique"
@@ -40,6 +43,7 @@ dependencies {
     implementation("io.ktor:ktor-server-core:1.4.0")
     implementation("io.ktor:ktor-client-core:1.5.2")
     implementation("io.ktor:ktor-client-cio:1.5.2")
+    implementation("io.ktor:ktor-client-serialization:1.5.2")
     implementation("io.ktor:ktor-gson:1.4.0")
     implementation("org.kodein.di:kodein-di-framework-ktor-server-jvm:7.0.0")
 

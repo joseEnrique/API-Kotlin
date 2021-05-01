@@ -17,6 +17,7 @@ import org.kodein.di.instance
 import org.kodein.di.ktor.di
 import services.RequestService
 import services.ServiceService
+/*
 
 fun Route.requests() {
 
@@ -64,3 +65,4 @@ fun Route.requests() {
         call.respond(HttpStatusCode.OK)
     }
 }
+*/

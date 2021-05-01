@@ -1,7 +1,6 @@
 package services
 
 import models.Request
-import models.RequestEntity
 import models.ServiceEntity
 import org.jetbrains.exposed.sql.transactions.transaction
 import es.us.isa.idlreasoner.analyzer.Analyzer
@@ -10,6 +9,7 @@ import java.util.HashMap
 
 
 class RequestService {
+/*
 
     fun getAllRequests(): Iterable<Request> = transaction {
         //println(analyzer.isValidIDL())
@@ -37,16 +37,14 @@ class RequestService {
     fun deleteRequest(requestId: Int) = transaction {
         RequestEntity[requestId].delete()
     }
+*/
 
     fun validateRequest(req: Request,serviceId: Int): Boolean? = transaction {
         val service = ServiceEntity.get(serviceId)
         val analyzer = Analyzer("oas", "no_deps.idl", "./src/public/${service.name}${service.id}.yml", req.uri, "get")
-        val gson = Gson()
-        //val fakrequest = "{'employee.name':'Bob','employee.salary':{'a':1}}"
-        val map: Map<*, *> = gson.fromJson(req.payload, MutableMap::class.java)
         val request: MutableMap<String, String> = java.util.HashMap()
-        for ((k, v) in map) {
-            request[k.toString()] = v.toString()
+        for ((k, v) in req.payload) {
+            request[k] = v
         }
         try {
             analyzer.isValidRequest(request)

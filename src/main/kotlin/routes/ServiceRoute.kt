@@ -32,7 +32,7 @@ fun Route.services() {
 
     post("service") {
         val serviceRequest = call.receive<Service>()
-        val serviceCreated = serviceService.addService(serviceRequest)
+        val serviceCreated = serviceService.createService(serviceRequest)
         val isDownloaded = serviceService.downloadOas(serviceCreated.oas,serviceCreated.name+serviceCreated.id.toString())
         if (isDownloaded){
             call.respond(serviceCreated)
@@ -48,7 +48,11 @@ fun Route.services() {
         val requestRequest = call.receive<Request>()
         val isValid = requestService.validateRequest(requestRequest,ServiceId)
         if (isValid != null) {
-            call.respond(isValid)
+            if (isValid){
+                call.respond(isValid)
+            } else{
+                call.respond(HttpStatusCode.BadRequest)
+            }
         }else{
             call.respond(HttpStatusCode.ServiceUnavailable)
         }

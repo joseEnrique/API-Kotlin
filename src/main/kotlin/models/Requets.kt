@@ -1,5 +1,8 @@
 package models
-
+import kotlinx.serialization.Serializable
+import com.fasterxml.jackson.databind.JsonNode
+import com.google.gson.JsonElement
+import kotlinx.serialization.SerialName
 import org.jetbrains.exposed.dao.IntEntity
 import org.jetbrains.exposed.dao.IntEntityClass
 import org.jetbrains.exposed.dao.id.EntityID
@@ -15,6 +18,7 @@ enum class Method(val status: String) {
 }
 
 
+/*
 
 object Requests : IntIdTable() {
     val service_id = reference("service_id", Services.id, onDelete = ReferenceOption.CASCADE)
@@ -35,16 +39,19 @@ class RequestEntity(id: EntityID<Int>) : IntEntity(id) {
     var payload by Requests.payload
     var service by ServiceEntity referencedOn Requests.service_id
     override fun toString(): String = "Request($name, $url,$method, $payload,$service)"
-    fun toRequest() = Request(id.value, name, url,uri,method,payload,service.id.value)
+    fun toRequest() = Request(id.value, name, url,uri,method,payload.textValue(),service.id.value)
 }
-
+*/
+@Serializable
 data class Request(
     val id: Int,
     val name: String,
     val url: String,
     val uri: String,
     val method: Method,
-    val payload: String,
+    //val payload: String,
+    @SerialName("payload")
+    val payload: Map<String, String>,
     val service_id: Int
 )
 

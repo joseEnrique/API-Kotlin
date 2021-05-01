@@ -7,6 +7,6 @@ import io.ktor.routing.route
 fun Routing.apiRoute() {
     route("/api/v1") {
         services()
-        requests()
+        //requests()
     }
 }

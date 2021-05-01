@@ -10,16 +10,18 @@ object Services : IntIdTable() {
     val name = varchar("name", 256)
     val url = varchar( "url", 256)
     val oas = varchar( "oas", 256)
+    val host = varchar( "host", 256)
 }
 class ServiceEntity(id: EntityID<Int>) : IntEntity(id) {
     companion object : IntEntityClass<ServiceEntity>(Services)
     var name by Services.name
     var url by Services.url
     var oas by Services.oas
-    val requests by RequestEntity referrersOn Requests.service_id
-    override fun toString(): String = "Service($name, $url, $oas, $requests)"
+    var host by Services.host
+    //val requests by RequestEntity referrersOn Requests.service_id
+    override fun toString(): String = "Service($name, $url, $oas,)"
 
-    fun toService() = Service(id.value, name, url, oas, requests)
+    fun toService() = Service(id.value, name, url, oas,host)
 }
 
 data class Service(
@@ -27,5 +29,6 @@ data class Service(
     val name: String,
     val url: String,
     val oas: String,
-    val requests: SizedIterable<RequestEntity>
+    val host: String,
+    //val requests: SizedIterable<RequestEntity>
 )
