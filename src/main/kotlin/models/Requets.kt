@@ -49,14 +49,12 @@ data class Request(
     val url: String,
     val uri: String,
     val method: Method,
-    //val payload: String,
-    @SerialName("payload")
-    val payload: Map<String, String>,
+    @SerialName("params")
+    val params: Map<String, String>,
     val service_id: Int
 )
 
 
 data class Valid(
     val isValid: Boolean,
-    val idInt: Int
 )

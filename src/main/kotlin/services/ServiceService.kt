@@ -46,7 +46,7 @@ class HTTPRequests {
         }
     }
     suspend fun attachCustomPlugin(name: String, id: Int) {
-        val config = Config(url = "http://192.168.250.18:8080",validationUri =  "/api/v1/service/$id/request/analyze")
+        val config = Config(url = "http://192.168.250.10:8080",validationUri =  "/api/v1/service/$id/request/analyze")
         println(config)
         client.post<Unit>("http://localhost:8001/services/$name/plugins") {
             contentType(ContentType.Application.Json)

@@ -9,6 +9,7 @@ import io.ktor.response.respond
 import io.ktor.routing.*
 import io.ktor.routing.delete
 import models.Request
+import models.Valid
 import org.kodein.di.instance
 import org.kodein.di.ktor.di
 import services.RequestService
@@ -49,9 +50,11 @@ fun Route.services() {
         val isValid = requestService.validateRequest(requestRequest,ServiceId)
         if (isValid != null) {
             if (isValid){
-                call.respond(isValid)
+                println (requestRequest)
+                call.respond(status = HttpStatusCode.OK,message = Valid(true))
             } else{
-                call.respond(HttpStatusCode.BadRequest)
+                println (requestRequest)
+                call.respond(HttpStatusCode.BadRequest,message = Valid(false))
             }
         }else{
             call.respond(HttpStatusCode.ServiceUnavailable)
