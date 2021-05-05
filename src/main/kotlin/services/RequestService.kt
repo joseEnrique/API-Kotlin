@@ -41,16 +41,23 @@ class RequestService {
 
     fun validateRequest(req: Request,serviceId: Int): Boolean? = transaction {
         val service = ServiceEntity.get(serviceId)
-        val analyzer = Analyzer("oas", "no_deps.idl", "./src/public/${service.name}${service.id}.yml", req.uri, "get")
+        val uriToCheck = if (service.prefix == ""){
+            req.uri
+        }else service.prefix?.let { req.uri.replace(it,"") }.toString()
+        println("*************"+uriToCheck+"*******")
+        true
+/*        val analyzer = Analyzer("oas", "youtube_simplified.idl", "./src/public/${service.name}${service.id}.yml", uriToCheck, "get")
         val request: MutableMap<String, String> = java.util.HashMap()
-        println(request)
+
         for ((k, v) in req.params) {
             request[k] = v
         }
         try {
+            println("*************"+uriToCheck)
             analyzer.isValidRequest(request)
         }catch (e: Exception){
+            println("*************"+uriToCheck)
             false
-        }
+        }*/
     }
 }

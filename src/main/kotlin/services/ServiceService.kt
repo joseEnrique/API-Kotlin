@@ -7,24 +7,12 @@ import io.ktor.client.features.json.*
 import io.ktor.client.features.json.serializer.*
 import io.ktor.client.request.*
 import io.ktor.http.*
-import kotlinx.serialization.Serializable
-import org.jetbrains.exposed.dao.id.EntityID
+import models.Config
+import models.KongService
 import java.io.*
 import org.jetbrains.exposed.sql.transactions.transaction
 
-@Serializable
-data class KongService(
-    val name: String? = null ,
-    val url: String? = null,
-    val hosts: Array<String>? = null,
-    val config: Config? = null
-)
 
-@Serializable
-data class Config(
-    val validationUri: String ,
-    val url: String ,
-)
 
 class HTTPRequests {
     val client = HttpClient(){
@@ -40,6 +28,7 @@ class HTTPRequests {
     }
 
     suspend fun createKongRoute(name: String, host: String) {
+        println(host)
         client.post<Unit>("http://localhost:8001/services/$name/routes") {
             contentType(ContentType.Application.Json)
             body = KongService(hosts = arrayOf(host))
@@ -99,6 +88,7 @@ class ServiceService {
             this.url = service.url
             this.oas = service.oas
             this.host = service.host
+            this.prefix = service.prefix
         }
         serv.toService()
     }
