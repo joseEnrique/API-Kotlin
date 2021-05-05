@@ -44,9 +44,7 @@ class RequestService {
         val uriToCheck = if (service.prefix == ""){
             req.uri
         }else service.prefix?.let { req.uri.replace(it,"") }.toString()
-        println("*************"+uriToCheck+"*******")
-        true
-/*        val analyzer = Analyzer("oas", "youtube_simplified.idl", "./src/public/${service.name}${service.id}.yml", uriToCheck, "get")
+        val analyzer = Analyzer("oas", "youtube_simplified.idl", "./src/public/${service.name}${service.id}.yml", uriToCheck, "get")
         val request: MutableMap<String, String> = java.util.HashMap()
 
         for ((k, v) in req.params) {
@@ -58,6 +56,6 @@ class RequestService {
         }catch (e: Exception){
             println("*************"+uriToCheck)
             false
-        }*/
+        }
     }
 }
